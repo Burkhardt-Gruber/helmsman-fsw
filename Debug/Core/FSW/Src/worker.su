@@ -1,0 +1,2 @@
+../Core/FSW/Src/worker.cpp:3:1:Worker::Worker()	16	static
+../Core/FSW/Src/worker.cpp:5:6:void Worker::TaskFunction(void*)	16	static

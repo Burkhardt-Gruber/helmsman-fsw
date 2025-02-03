@@ -1,0 +1,2 @@
+../Core/FSW/Src/fsw_main.cpp:9:16:int fsw_main()	8	static
+../Core/FSW/Src/fsw_main.cpp:15:6:void create_workers()	4	static
