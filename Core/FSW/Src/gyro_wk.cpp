@@ -1,6 +1,6 @@
 #include "gyro_wk.h"
 
-void GyroWk::RunLogic()
+void GyroWk::Run()
 {
 	volatile int test;
 

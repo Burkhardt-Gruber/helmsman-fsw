@@ -1,3 +1,1 @@
-../Core/FSW/Src/gyro_wk.cpp:3:6:virtual void GyroWk::RunLogic()	24	static
-/home/jimmy/Projects/School/SP/flightsoftware/Core/FSW/Inc/gyro_wk.h:8:7:GyroWk::~GyroWk()	16	static
-/home/jimmy/Projects/School/SP/flightsoftware/Core/FSW/Inc/gyro_wk.h:8:7:virtual GyroWk::~GyroWk()	16	static
+../Core/FSW/Src/gyro_wk.cpp:3:6:void GyroWk::Run()	24	static

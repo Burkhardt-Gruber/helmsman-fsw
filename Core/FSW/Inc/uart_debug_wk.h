@@ -1,13 +1,16 @@
 #pragma once
 
 #include "worker.h"
-
+#include "main.h"
 
 /**
- * @brief Class for 
+ * @brief Class for communicating over USART3 on the Nucleo for debugging purposes
  */
 class UartDebugWk : public Worker
 {
-    void Setup();
-    void Run();
+public:
+    void Setup(void * arg) override;
+    void Run(void *arg) override;
+    ~UartDebugWk();
+private:
 };

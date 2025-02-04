@@ -16,20 +16,20 @@ public:
     Worker();
 
     /**
-     * @brief Task function, which will be used as the entry point for the thread for this worker. Calls FsmRunner and then spins.
-     * @param task_permeters Necesary for FreeRTOS API stuff
+     * @brief Task function, which will be used as the entry point for the thread for this worker. Calls Run.
+     * @param arg Pointer to the Worker class to be run
      */
-    void TaskFunction(void *task_parameters);    
-    virtual ~Worker() = 0;
+    static void TaskFunction(void *arg);
 
-private:
     /**
      * @brief Setup logic that should be run before the RTOS thread is started. 
      */
-    virtual void Setup() = 0;
+    virtual void Setup(void *arg) = 0;
 
     /**
      * @brief Runs the logic for this worker. Called by TaskFunction. Usually should not return.
      */
-    virtual void Run() = 0;
+    virtual void Run(void *arg);
+
+    virtual ~Worker();
 };

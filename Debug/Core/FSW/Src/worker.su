@@ -1,2 +1,5 @@
 ../Core/FSW/Src/worker.cpp:3:1:Worker::Worker()	16	static
-../Core/FSW/Src/worker.cpp:5:6:void Worker::TaskFunction(void*)	16	static
+../Core/FSW/Src/worker.cpp:5:6:static void Worker::TaskFunction(void*)	24	static
+../Core/FSW/Src/worker.cpp:11:6:virtual void Worker::Run(void*)	16	static
+../Core/FSW/Src/worker.cpp:16:1:Worker::~Worker()	16	static
+../Core/FSW/Src/worker.cpp:16:1:virtual Worker::~Worker()	16	static

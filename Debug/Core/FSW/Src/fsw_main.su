@@ -1,2 +1,4 @@
-../Core/FSW/Src/fsw_main.cpp:9:16:int fsw_main()	8	static
-../Core/FSW/Src/fsw_main.cpp:15:6:void create_workers()	4	static
+../Core/FSW/Src/fsw_main.cpp:23:16:int fsw_main(void*)	16	static
+../Core/FSW/Src/fsw_main.cpp:29:6:void global_init()	4	static,ignoring_inline_asm
+/home/jimmy/Projects/School/SP/flightsoftware/Core/FSW/Inc/uart_debug_wk.h:9:7:UartDebugWk::UartDebugWk()	16	static
+../Core/FSW/Src/fsw_main.cpp:34:6:void create_workers(void*)	32	static

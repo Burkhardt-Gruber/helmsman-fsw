@@ -2,10 +2,15 @@
 
 Worker::Worker() {}
 
-void Worker::TaskFunction(void *task_parameters)
+void Worker::TaskFunction(void *arg)
 {
-    RunLogic();
+    Worker *wk_ptr = static_cast<Worker *>(arg);
+    wk_ptr->Run(NULL);
+}
 
-    // Should never reach here.
+void Worker::Run(void *arg)
+{
     while(1);
 }
+
+Worker::~Worker() {}
