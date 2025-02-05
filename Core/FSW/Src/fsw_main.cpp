@@ -9,6 +9,7 @@
 #include "queue.h"
 #include "semphr.h"
 #include "event_groups.h"
+#include "fsw_debug.h"
 
 /**
  * @brief Initialize global stuff
@@ -29,6 +30,7 @@ extern "C" int fsw_main(void *arg)
 void global_init()
 {
     __enable_irq();
+    FswDebug::Init();
 }
 
 void create_workers(void *arg)

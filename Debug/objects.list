@@ -1,3 +1,4 @@
+"./Core/FSW/Src/fsw_debug.o"
 "./Core/FSW/Src/fsw_main.o"
 "./Core/FSW/Src/gyro_wk.o"
 "./Core/FSW/Src/uart_debug_wk.o"

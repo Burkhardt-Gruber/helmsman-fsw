@@ -8,9 +8,12 @@
  */
 class UartDebugWk : public Worker
 {
-public:
+public:    
     void Setup(void * arg) override;
     void Run(void *arg) override;
     ~UartDebugWk();
+
 private:
+    void USART3_SendChar(char c);
+    void USART3_SendString(const char *str);
 };
