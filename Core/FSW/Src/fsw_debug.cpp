@@ -4,12 +4,12 @@
 #include <cstdio>
 #include <cstdarg>
 
-#include "FreeRTOS.h"
-#include "task.h"
 #include "main.h"
 
 #define USART_BAUDRATE 115200
 #define USART_CLOCK 36000000  // Assuming 36 MHz APB1 clock
+
+SemaphoreHandle_t FswDebug::mutex;
 
 void FswDebug::Init()
 {
@@ -33,6 +33,8 @@ void FswDebug::Init()
     // 4. Wait for USART to be ready
     while (!(USART3->ISR & USART_ISR_TEACK)) {} // Wait for TX enable
     //while (!(USART3->ISR & USART_ISR_REACK)) {} // Wait for RX enable
+
+    mutex = xSemaphoreCreateMutex();
 }
 
 void FswDebug::Log(const char *format, ...)
@@ -40,7 +42,11 @@ void FswDebug::Log(const char *format, ...)
     char buff[256];
     char new_buff[512];
     va_list args;
-    const char *task_name = pcTaskGetName(NULL);
+    char *task_name;
+
+    xSemaphoreTake(mutex, portMAX_DELAY);
+
+    task_name = pcTaskGetName(NULL);
 
     va_start(args, format);
     vsnprintf(buff, sizeof(buff), format, args);
@@ -48,6 +54,8 @@ void FswDebug::Log(const char *format, ...)
 
     snprintf(new_buff, 512, "[%s]\t\t%s\r", task_name, buff);
     USART3_SendString(new_buff);
+
+    xSemaphoreGive(mutex);
 }
 
 void FswDebug::USART3_SendChar(char c) {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
@@ -17,7 +19,7 @@ public:
 
     /**
      * @brief Task function, which will be used as the entry point for the thread for this worker. Calls Run.
-     * @param arg Pointer to the Worker class to be run
+     * @param wk Pointer to the Worker class to be run
      */
     static void TaskFunction(void *arg);
 
@@ -26,10 +28,11 @@ public:
      */
     virtual void Setup(void *arg) = 0;
 
+    virtual ~Worker();
+
+private:
     /**
      * @brief Runs the logic for this worker. Called by TaskFunction. Usually should not return.
      */
     virtual void Run(void *arg);
-
-    virtual ~Worker();
 };

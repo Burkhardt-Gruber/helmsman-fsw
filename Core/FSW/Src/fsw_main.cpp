@@ -1,8 +1,10 @@
 #include "fsw_main.h"
 
+#include <memory>
 
 #include "worker.h"
-#include "uart_debug_wk.h"
+#include "example_wk.h"
+#include "cmsis_gcc.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
@@ -14,33 +16,41 @@
 /**
  * @brief Initialize global stuff
  */
-static void global_init();
+static void GlobalInit();
 
 /**
  * @brief Create the list of workers for the FSW
  */
-static void create_workers(void *arg);
+static void CreateWorkers(void *arg);
 
-extern "C" int fsw_main(void *arg)
+extern "C" int FswMain(void *arg)
 {
-    create_workers(arg);
+    CreateWorkers(arg);
     return 0;
 }
 
-void global_init()
+void GlobalInit()
 {
     __enable_irq();
     FswDebug::Init();
 }
 
-void create_workers(void *arg)
+void CreateWorkers(void *arg)
 {
-    UartDebugWk uart_debug_wk;
+    //Stuff on the stack here gets nuked after the scheduler starts, so putting these on the heap
+    // Should unique ptrs be used here?
+    std::unique_ptr<ExampleWk> ex_wk_0_ptr = std::make_unique<ExampleWk>();
+    //ExampleWk *ex_wk_0_ptr = new ExampleWk;
+    std::unique_ptr<ExampleWk> ex_wk_1_ptr = std::make_unique<ExampleWk>();
+    //ExampleWk *ex_wk_1_ptr = new ExampleWk;
 
-    uart_debug_wk.Setup(arg);
-    //global_init();
+    ex_wk_0_ptr->Setup(arg);
+    ex_wk_1_ptr->Setup(arg);
 
-    xTaskCreate(Worker::TaskFunction, "Uart Debug", 1000, &uart_debug_wk, 1, NULL);
+    GlobalInit();
+
+    xTaskCreate(Worker::TaskFunction, "ExWk0", 2048, ex_wk_0_ptr.release(), 1, NULL);
+    xTaskCreate(Worker::TaskFunction, "ExWk1", 2048, ex_wk_1_ptr.release(), 1, NULL);
 
     vTaskStartScheduler();
 }

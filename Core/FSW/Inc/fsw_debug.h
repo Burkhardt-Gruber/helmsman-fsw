@@ -1,6 +1,8 @@
 #pragma once
 
-#include <chrono>
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
 
 /**
  * @brief Class for debugging stuff
@@ -21,4 +23,6 @@ public:
 private:
     static void USART3_SendChar(char c);
     static void USART3_SendString(const char *str);
+
+    static SemaphoreHandle_t mutex;
 };

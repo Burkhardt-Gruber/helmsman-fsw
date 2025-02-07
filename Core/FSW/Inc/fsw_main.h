@@ -6,7 +6,7 @@ extern "C"
 #endif
 
 /* Entry point for FSW stuff */
-int fsw_main(void *arg);
+int FswMain(void *arg);
 
 #ifdef __cplusplus
 }

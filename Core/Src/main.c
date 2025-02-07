@@ -97,7 +97,7 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
 
-  fsw_main(NULL);
+  FswMain(NULL);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
