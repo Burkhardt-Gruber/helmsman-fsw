@@ -8,7 +8,9 @@
 class ExampleWk : public Worker
 {
 public:
-    void Setup(void *arg) override;
+    ExampleWk(std::shared_ptr<FswIpc> ipc_ptr);
+
+    void Init(void *arg) override;
     
 private:
     void Run(void *arg) override;

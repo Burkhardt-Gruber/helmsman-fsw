@@ -2,13 +2,16 @@
 
 #include "fsw_debug.h"
 
-void ExampleWk::Setup(void *arg)
+ExampleWk::ExampleWk(std::shared_ptr<FswIpc> ipc_ptr) : Worker(ipc_ptr) {}
+
+void ExampleWk::Init(void *arg)
 {
-    // No setup
+    (void)(arg);
 }
 
 void ExampleWk::Run(void *arg)
 {
+    (void)(arg);
     while(1)
     {
         FswDebug::Log("Hello!\n");
