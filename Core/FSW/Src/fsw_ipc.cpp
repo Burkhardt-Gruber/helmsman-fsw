@@ -1,5 +1,8 @@
 #include "fsw_ipc.h"
 
+#include "fsw_debug.h"
+#include "fsw_util.h"
+
 FswIpc::FswIpc()
 {
     for (unsigned int i = 0; i < channel_ptr_array.size(); i++)
@@ -32,7 +35,7 @@ Status FswIpc::Send(taskid_t dest_id, void *data)
 
 Message FswIpc::Recv()
 {
-    taskid_t calling_id = uxTaskGetTaskNumber(NULL);
+    taskid_t calling_id = FswUtil::GetId();
     configASSERT(0 <= calling_id && calling_id < WORKER_COUNT);
 
     return channel_ptr_array[calling_id]->Recv();
@@ -40,7 +43,7 @@ Message FswIpc::Recv()
 
 size_t FswIpc::NumMessagesWaiting()
 {
-    taskid_t calling_id = uxTaskGetTaskNumber(NULL);
+    taskid_t calling_id = FswUtil::GetId();
     configASSERT(0 <= calling_id && calling_id < WORKER_COUNT);
 
     return channel_ptr_array[calling_id]->NumMessagesWaiting();

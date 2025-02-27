@@ -16,7 +16,8 @@
 #include "fsw_debug.h"
 #include "task_nums.h"
 
-#define WD_TIMEOUT_MS 1000
+// 3 second timeout
+#define WD_TIMEOUT_MS 3000
 
 /**
  * @brief Initialize global stuff
@@ -50,23 +51,18 @@ void CreateWorkers(void *arg)
     ipc_ptr->Init();
 
     std::shared_ptr<Worker> ex_wk_0_ptr = std::make_shared<ExampleWk>(ipc_ptr);
-    std::shared_ptr<Worker> ex_wk_1_ptr = std::make_shared<ExampleWk>(ipc_ptr);
-    std::shared_ptr<Worker> watchdog_wk = std::make_shared<NucleoWatchdogWk>(ipc_ptr, WD_TIMEOUT_MS);
-
     ex_wk_0_ptr->Init(arg);
-    ex_wk_1_ptr->Init(arg);
+
+    std::shared_ptr<Worker> watchdog_wk = std::make_shared<NucleoWatchdogWk>(ipc_ptr, WD_TIMEOUT_MS);
     watchdog_wk->Init(arg);
 
     GlobalInit();
 
     xTaskCreate(Worker::TaskFunction, "ExWk0", 2048, ex_wk_0_ptr.get(), 1, &handle);
-    vTaskSetTaskNumber(handle, EXAMPLE_WK_0_NUM);
-
-    xTaskCreate(Worker::TaskFunction, "ExWk1", 2048, ex_wk_1_ptr.get(), 1, &handle);
-    vTaskSetTaskNumber(handle, EXAMPLE_WK_1_NUM);
+    vTaskSetThreadLocalStoragePointer(handle, 0, (void *)EXAMPLE_WK_0_NUM);
 
     xTaskCreate(Worker::TaskFunction, "Watchdog", 2048, watchdog_wk.get(), 1, &handle);
-    vTaskSetTaskNumber(handle, WATCHDOG_NUM);
+    vTaskSetThreadLocalStoragePointer(handle, 0, (void *)WATCHDOG_NUM);
 
     vTaskStartScheduler();
 }

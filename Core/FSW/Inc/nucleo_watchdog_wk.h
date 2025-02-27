@@ -14,7 +14,5 @@ public:
     void Init(void *arg) override;
 
 private:
-    void Run(void *arg) override;
-
     void Tap() override;
 };

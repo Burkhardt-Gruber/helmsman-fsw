@@ -55,8 +55,8 @@
 #define configENABLE_FPU                         0
 #define configENABLE_MPU                         0
 
-// For task number shit
-#define configUSE_TRACE_FACILITY                 1
+// Whatever shit
+#define configNUM_THREAD_LOCAL_STORAGE_POINTERS  1
 
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          1

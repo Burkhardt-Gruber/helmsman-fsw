@@ -17,6 +17,8 @@ protected:
     uint32_t timeout_;
 
 private:
+    void Run(void *arg) override;
+
     /**
      * @brief Tap the watchdog
      */

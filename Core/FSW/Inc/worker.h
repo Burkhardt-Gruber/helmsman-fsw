@@ -34,9 +34,10 @@ public:
 
     virtual ~Worker();
 
-private:
+protected:
     std::shared_ptr<FswIpc> ipc_ptr_;
 
+private:
     /**
      * @brief Runs the logic for this worker. Called by TaskFunction. Usually should not return.
      */

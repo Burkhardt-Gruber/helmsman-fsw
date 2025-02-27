@@ -37,28 +37,7 @@ void NucleoWatchdogWk::Init(void *arg)
 
     // Refresh counter
     IWDG->KR  = WD_REFRESH;
-}    /**
-     * @brief Refresh counter
-     */
-    void Refresh();
-
-void NucleoWatchdogWk::Run(void *arg)
-{
-    (void)arg;
-
-    while(1)
-    {
-        for(int i = 0; i < 3; i++)
-        {
-            FswDebug::Log("Tapping WD #%i\n", i);
-            Tap();
-            vTaskDelay(pdMS_TO_TICKS(1000));
-        }
-        FswDebug::Log("Letting WD restart!\n");
-        vTaskSuspend(NULL);
-    }
-   
-}
+} 
 
 void NucleoWatchdogWk::Tap()
 {

@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../Core/FSW/Src/fsw_debug.cpp \
 ../Core/FSW/Src/fsw_ipc.cpp \
 ../Core/FSW/Src/fsw_main.cpp \
+../Core/FSW/Src/fsw_util.cpp \
 ../Core/FSW/Src/message.cpp \
 ../Core/FSW/Src/nucleo_watchdog_wk.cpp \
 ../Core/FSW/Src/watchdog_wk.cpp \
@@ -21,6 +22,7 @@ OBJS += \
 ./Core/FSW/Src/fsw_debug.o \
 ./Core/FSW/Src/fsw_ipc.o \
 ./Core/FSW/Src/fsw_main.o \
+./Core/FSW/Src/fsw_util.o \
 ./Core/FSW/Src/message.o \
 ./Core/FSW/Src/nucleo_watchdog_wk.o \
 ./Core/FSW/Src/watchdog_wk.o \
@@ -32,6 +34,7 @@ CPP_DEPS += \
 ./Core/FSW/Src/fsw_debug.d \
 ./Core/FSW/Src/fsw_ipc.d \
 ./Core/FSW/Src/fsw_main.d \
+./Core/FSW/Src/fsw_util.d \
 ./Core/FSW/Src/message.d \
 ./Core/FSW/Src/nucleo_watchdog_wk.d \
 ./Core/FSW/Src/watchdog_wk.d \
@@ -45,7 +48,7 @@ Core/FSW/Src/%.o Core/FSW/Src/%.su Core/FSW/Src/%.cyclo: ../Core/FSW/Src/%.cpp C
 clean: clean-Core-2f-FSW-2f-Src
 
 clean-Core-2f-FSW-2f-Src:
-	-$(RM) ./Core/FSW/Src/channel.cyclo ./Core/FSW/Src/channel.d ./Core/FSW/Src/channel.o ./Core/FSW/Src/channel.su ./Core/FSW/Src/example_wk.cyclo ./Core/FSW/Src/example_wk.d ./Core/FSW/Src/example_wk.o ./Core/FSW/Src/example_wk.su ./Core/FSW/Src/fsw_debug.cyclo ./Core/FSW/Src/fsw_debug.d ./Core/FSW/Src/fsw_debug.o ./Core/FSW/Src/fsw_debug.su ./Core/FSW/Src/fsw_ipc.cyclo ./Core/FSW/Src/fsw_ipc.d ./Core/FSW/Src/fsw_ipc.o ./Core/FSW/Src/fsw_ipc.su ./Core/FSW/Src/fsw_main.cyclo ./Core/FSW/Src/fsw_main.d ./Core/FSW/Src/fsw_main.o ./Core/FSW/Src/fsw_main.su ./Core/FSW/Src/message.cyclo ./Core/FSW/Src/message.d ./Core/FSW/Src/message.o ./Core/FSW/Src/message.su ./Core/FSW/Src/nucleo_watchdog_wk.cyclo ./Core/FSW/Src/nucleo_watchdog_wk.d ./Core/FSW/Src/nucleo_watchdog_wk.o ./Core/FSW/Src/nucleo_watchdog_wk.su ./Core/FSW/Src/watchdog_wk.cyclo ./Core/FSW/Src/watchdog_wk.d ./Core/FSW/Src/watchdog_wk.o ./Core/FSW/Src/watchdog_wk.su ./Core/FSW/Src/worker.cyclo ./Core/FSW/Src/worker.d ./Core/FSW/Src/worker.o ./Core/FSW/Src/worker.su
+	-$(RM) ./Core/FSW/Src/channel.cyclo ./Core/FSW/Src/channel.d ./Core/FSW/Src/channel.o ./Core/FSW/Src/channel.su ./Core/FSW/Src/example_wk.cyclo ./Core/FSW/Src/example_wk.d ./Core/FSW/Src/example_wk.o ./Core/FSW/Src/example_wk.su ./Core/FSW/Src/fsw_debug.cyclo ./Core/FSW/Src/fsw_debug.d ./Core/FSW/Src/fsw_debug.o ./Core/FSW/Src/fsw_debug.su ./Core/FSW/Src/fsw_ipc.cyclo ./Core/FSW/Src/fsw_ipc.d ./Core/FSW/Src/fsw_ipc.o ./Core/FSW/Src/fsw_ipc.su ./Core/FSW/Src/fsw_main.cyclo ./Core/FSW/Src/fsw_main.d ./Core/FSW/Src/fsw_main.o ./Core/FSW/Src/fsw_main.su ./Core/FSW/Src/fsw_util.cyclo ./Core/FSW/Src/fsw_util.d ./Core/FSW/Src/fsw_util.o ./Core/FSW/Src/fsw_util.su ./Core/FSW/Src/message.cyclo ./Core/FSW/Src/message.d ./Core/FSW/Src/message.o ./Core/FSW/Src/message.su ./Core/FSW/Src/nucleo_watchdog_wk.cyclo ./Core/FSW/Src/nucleo_watchdog_wk.d ./Core/FSW/Src/nucleo_watchdog_wk.o ./Core/FSW/Src/nucleo_watchdog_wk.su ./Core/FSW/Src/watchdog_wk.cyclo ./Core/FSW/Src/watchdog_wk.d ./Core/FSW/Src/watchdog_wk.o ./Core/FSW/Src/watchdog_wk.su ./Core/FSW/Src/worker.cyclo ./Core/FSW/Src/worker.d ./Core/FSW/Src/worker.o ./Core/FSW/Src/worker.su
 
 .PHONY: clean-Core-2f-FSW-2f-Src
 

@@ -3,6 +3,7 @@
 "./Core/FSW/Src/fsw_debug.o"
 "./Core/FSW/Src/fsw_ipc.o"
 "./Core/FSW/Src/fsw_main.o"
+"./Core/FSW/Src/fsw_util.o"
 "./Core/FSW/Src/message.o"
 "./Core/FSW/Src/nucleo_watchdog_wk.o"
 "./Core/FSW/Src/watchdog_wk.o"

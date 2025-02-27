@@ -52,7 +52,7 @@ void FswDebug::Log(const char *format, ...)
     vsnprintf(buff, sizeof(buff), format, args);
     va_end(args);
 
-    snprintf(new_buff, 512, "[%s]\t\t%s\r", task_name, buff);
+    snprintf(new_buff, 512, "%-20s %s\n\r", task_name, buff);
     USART3_SendString(new_buff);
 
     xSemaphoreGive(mutex);

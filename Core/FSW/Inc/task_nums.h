@@ -1,8 +1,9 @@
 #pragma once
 
-#define WATCHDOG_NUM 0
-#define EXAMPLE_WK_0_NUM 1
-#define EXAMPLE_WK_1_NUM 2
+#include "common.h"
 
-#define WORKER_COUNT 3
+constexpr taskid_t WATCHDOG_NUM = 0;
+constexpr taskid_t EXAMPLE_WK_0_NUM = 1;
+
+constexpr taskid_t WORKER_COUNT = 2;
 

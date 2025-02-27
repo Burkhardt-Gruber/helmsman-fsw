@@ -1,5 +1,7 @@
 #include "channel.h"
 
+#include "fsw_util.h"
+
 Channel::Channel(taskid_t dest) : dest_(dest) {}
 
 Status Channel::Init()
@@ -21,7 +23,7 @@ Status Channel::Send(void *data)
 
     xSemaphoreTake(send_mutex, portMAX_DELAY);
 
-    Message msg((taskid_t)uxTaskGetTaskNumber(NULL), data);
+    Message msg(FswUtil::GetId(), data);
 
     // Don't block
     ret = xQueueSend(queue_handle, &msg, 0);
