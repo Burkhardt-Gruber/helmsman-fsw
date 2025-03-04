@@ -26,13 +26,13 @@ public:
     /**
      * @brief Sent a message on the channel. THREAD SAFE!!
      */
-    Status Send(void *data);
+    Status Send(void *data, TickType_t block_time);
 
     /**
      * @brief Recieve a message on the channel. Should only be called by owner worker.
-     * @return message.get_source = -1 if queue empty
+     * @return message.get_source = -1 if queue empty or block_time expires
      */
-    Message Recv();
+    Message Recv(TickType_t block_time);
 
     /**
      * @brief Get the number of messages in queue

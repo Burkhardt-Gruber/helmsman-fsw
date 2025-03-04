@@ -27,18 +27,18 @@ Status FswIpc::Init()
     return Status::OK;
 }
 
-Status FswIpc::Send(taskid_t dest_id, void *data)
+Status FswIpc::Send(taskid_t dest_id, void *data, TickType_t block_time)
 {
     configASSERT(0 <= dest_id && dest_id < WORKER_COUNT);
-    return channel_ptr_array[dest_id]->Send(data);
+    return channel_ptr_array[dest_id]->Send(data, block_time);
 }
 
-Message FswIpc::Recv()
+Message FswIpc::Recv(TickType_t block_time)
 {
     taskid_t calling_id = FswUtil::GetId();
     configASSERT(0 <= calling_id && calling_id < WORKER_COUNT);
 
-    return channel_ptr_array[calling_id]->Recv();
+    return channel_ptr_array[calling_id]->Recv(block_time);
 }
 
 size_t FswIpc::NumMessagesWaiting()

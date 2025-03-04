@@ -17,7 +17,7 @@ Status Channel::Init()
     return Status::OK;
 }
 
-Status Channel::Send(void *data)
+Status Channel::Send(void *data, TickType_t block_time)
 {
     BaseType_t ret;
 
@@ -25,8 +25,7 @@ Status Channel::Send(void *data)
 
     Message msg(FswUtil::GetId(), data);
 
-    // Don't block
-    ret = xQueueSend(queue_handle, &msg, 0);
+    ret = xQueueSend(queue_handle, &msg, block_time);
     if (ret != pdPASS)
     {
         xSemaphoreGive(send_mutex);
@@ -39,12 +38,11 @@ Status Channel::Send(void *data)
     return Status::OK;
 }
 
-Message Channel::Recv()
+Message Channel::Recv(TickType_t block_time)
 {
     Message msg(-1, NULL);
 
-    // Don't block - check size before calling!
-    xQueueReceive(queue_handle, &msg, 0);
+    xQueueReceive(queue_handle, &msg, block_time);
     return msg;
 }
 

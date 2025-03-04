@@ -5,6 +5,7 @@
 
 #include "channel.h"
 #include "task_nums.h"
+#include "FreeRTOS.h"
 
 /**
  * @brief Class which facilitates IPC between workers. IN RECV GET CALLING FUNCTION'S ID !!!
@@ -22,12 +23,12 @@ public:
     /**
      * @brief Send a message to the supplied dest
      */
-    Status Send(taskid_t dest_id, void *data);
+    Status Send(taskid_t dest_id, void *data, TickType_t block_time);
 
     /**
      * @brief Recieve a message on the caller's channel
      */
-    Message Recv();
+    Message Recv(TickType_t block_time);
 
     /**
      * @brief Get the number of messages waiting in the caller's channel

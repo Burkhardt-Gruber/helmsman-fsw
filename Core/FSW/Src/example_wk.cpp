@@ -23,12 +23,12 @@ void ExampleWk::Run(void *arg)
 
         // Poll for a message (presumably from WD)
         while(ipc_ptr_->NumMessagesWaiting() == 0);
-        msg = ipc_ptr_->Recv();
+        msg = ipc_ptr_->Recv(0);
 
         if (msg.get_source() == WATCHDOG_NUM)
         {
             FswDebug::Log("Recieved message from WD.\n");
-            ipc_ptr_->Send(WATCHDOG_NUM, NULL);
+            ipc_ptr_->Send(WATCHDOG_NUM, NULL, 0);
             FswDebug::Log("Sent message back to WD.\n");
         }
         
