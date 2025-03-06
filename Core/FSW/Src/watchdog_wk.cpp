@@ -29,7 +29,7 @@ bool WatchdogWk::IsAllTimesValid(TickType_t current_time)
 
 bool WatchdogWk::IsTimeValid(TickType_t last_tap_time, TickType_t current_time)
 {
-    return (current_time - last_tap_time) > tick_tasks_timeout_; 
+    return (current_time - last_tap_time) < tick_tasks_timeout_;
 }
 
 void WatchdogWk::Run(void *arg)
@@ -48,37 +48,18 @@ void WatchdogWk::Run(void *arg)
         msg = ipc_ptr_->Recv(portMAX_DELAY);
         msg_source = msg.get_source();
 
-        // Check if recieved valid message - can't come from WD itself, so ignore 0
-        if (0 < msg_source && msg_source < WORKER_COUNT)
-        {
-            current_tick_count = xTaskGetTickCount();
-            times_since_taps_[msg_source] = current_tick_count;
+        // Check if recieved valid message - can't come from WD itself, so don't look at 0
+        configASSERT(0 < msg_source && msg_source < WORKER_COUNT);
 
-            // If times valid, tap the watchdog
-            IsAllTimesValid(current_tick_count);
-        }
+        current_tick_count = xTaskGetTickCount();
 
-        /*   
-        // Send a message to EXAMPLE_WK_0
-        ipc_ptr_->Send(EXAMPLE_WK_0_NUM, NULL, 0);
-        FswDebug::Log("Sending message to wk_0.\n");
+        // -1 since no watchdog
+        times_since_taps_[msg_source-1] = current_tick_count;
 
-        // Poll reciever for message
-        while(ipc_ptr_->NumMessagesWaiting() == 0);
-
-        // Get message
-        msg = ipc_ptr_->Recv(0);
-
-        // Verify message sender
-        if (msg.get_source() == EXAMPLE_WK_0_NUM)
+        // If times valid, tap the watchdog
+        if(IsAllTimesValid(current_tick_count))
         {
             Tap();
-            wd_tap_count++;
-            FswDebug::Log("Recieved response, tapped wd #%lu.\n", wd_tap_count);
         }
-
-        // Wait for a second
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        */
     }
 }

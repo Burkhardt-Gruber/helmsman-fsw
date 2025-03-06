@@ -12,6 +12,15 @@
 #include "event_groups.h"
 #include "fsw_ipc.h"
 
+class Worker;
+
+// Struct representing argument to task function
+struct TaskFunctionArg
+{
+    std::shared_ptr<Worker> wk_ptr;
+    void *data;
+};
+
 /**
  * @brief Worker class, which encapsulates the behavior for one asynronous worker. Has its own thread. Each process should define its own worker subclass. Workers should be implemented as fsms.
  * ALL FUNCTIONS EXEPT FOR SendMsg and TaskFunction SHOULD BE CALLED BY THIS WORKER'S THREAD

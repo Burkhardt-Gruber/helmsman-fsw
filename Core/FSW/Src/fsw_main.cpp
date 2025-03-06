@@ -44,24 +44,45 @@ void GlobalInit()
 void CreateWorkers(void *arg)
 {
     TaskHandle_t handle;
+    struct TaskFunctionArg *tf_arg_array = new struct TaskFunctionArg[WORKER_COUNT];
 
     // Stuff on the stack here gets nuked after the scheduler starts, so putting these on the heap
     // Should unique ptrs be used here?
     std::shared_ptr<FswIpc> ipc_ptr = std::make_shared<FswIpc>();
     ipc_ptr->Init();
 
-    std::shared_ptr<Worker> ex_wk_0_ptr = std::make_shared<ExampleWk>(ipc_ptr);
-    ex_wk_0_ptr->Init(arg);
+    std::shared_ptr<Worker> ex_wk_1_ptr = std::make_shared<ExampleWk>(ipc_ptr);
+    ex_wk_1_ptr->Init(arg);
 
-    std::shared_ptr<Worker> watchdog_wk = std::make_shared<NucleoWatchdogWk>(ipc_ptr, WD_TIMEOUT_MS);
-    watchdog_wk->Init(arg);
+    std::shared_ptr<Worker> ex_wk_2_ptr = std::make_shared<ExampleWk>(ipc_ptr);
+    ex_wk_2_ptr->Init(arg);
+
+    std::shared_ptr<Worker> ex_wk_3_ptr = std::make_shared<ExampleWk>(ipc_ptr);
+    ex_wk_3_ptr->Init(arg);
+
+    std::shared_ptr<Worker> watchdog_wk_ptr = std::make_shared<NucleoWatchdogWk>(ipc_ptr, WD_TIMEOUT_MS);
+    watchdog_wk_ptr->Init(arg);
 
     GlobalInit();
 
-    xTaskCreate(Worker::TaskFunction, "ExWk0", 2048, ex_wk_0_ptr.get(), 1, &handle);
-    vTaskSetThreadLocalStoragePointer(handle, 0, (void *)EXAMPLE_WK_0_NUM);
+    tf_arg_array[EXAMPLE_WK_1_NUM].wk_ptr = ex_wk_1_ptr;
+    tf_arg_array[EXAMPLE_WK_1_NUM].data = (void *)1000;
+    xTaskCreate(Worker::TaskFunction, "ExWk1", 2048, &tf_arg_array[EXAMPLE_WK_1_NUM], 1, &handle);
+    vTaskSetThreadLocalStoragePointer(handle, 0, (void *)EXAMPLE_WK_1_NUM);
 
-    xTaskCreate(Worker::TaskFunction, "Watchdog", 2048, watchdog_wk.get(), 1, &handle);
+    tf_arg_array[EXAMPLE_WK_2_NUM].wk_ptr = ex_wk_2_ptr;
+    tf_arg_array[EXAMPLE_WK_2_NUM].data = (void *)1000;
+    xTaskCreate(Worker::TaskFunction, "ExWk2", 2048, &tf_arg_array[EXAMPLE_WK_2_NUM], 1, &handle);
+    vTaskSetThreadLocalStoragePointer(handle, 0, (void *)EXAMPLE_WK_2_NUM);
+
+    tf_arg_array[EXAMPLE_WK_3_NUM].wk_ptr = ex_wk_3_ptr;
+    tf_arg_array[EXAMPLE_WK_3_NUM].data = (void *)1000;
+    xTaskCreate(Worker::TaskFunction, "ExWk3", 2048, &tf_arg_array[EXAMPLE_WK_3_NUM], 1, &handle);
+    vTaskSetThreadLocalStoragePointer(handle, 0, (void *)EXAMPLE_WK_3_NUM);
+
+    tf_arg_array[WATCHDOG_NUM].wk_ptr = watchdog_wk_ptr;
+    tf_arg_array[EXAMPLE_WK_1_NUM].data = (void *)1000;
+    xTaskCreate(Worker::TaskFunction, "Watchdog", 2048, &tf_arg_array[WATCHDOG_NUM], 1, &handle);
     vTaskSetThreadLocalStoragePointer(handle, 0, (void *)WATCHDOG_NUM);
 
     vTaskStartScheduler();

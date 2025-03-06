@@ -34,8 +34,8 @@ private:
      */
     TickType_t tick_tasks_timeout_;
 
-    // Array of the tick count of the last tap from each worker/task
-    std::array<TickType_t, WORKER_COUNT> times_since_taps_{};
+    // Array of the tick count of the last tap from each worker/task. -1 b/c no watchdog
+    std::array<TickType_t, WORKER_COUNT-1> times_since_taps_{};
 
     /**
      * @brief Initialize task timeouts
