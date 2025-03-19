@@ -15,7 +15,7 @@
 class WatchdogWk : public Worker
 {
 public:
-    WatchdogWk(std::shared_ptr<FswIpc> ipc_ptr_, uint32_t timeout);
+    WatchdogWk(std::shared_ptr<FswIpc> ipc_ptr, uint32_t timeout);
 
 protected:
     /**

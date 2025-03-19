@@ -15,9 +15,7 @@
 #include "event_groups.h"
 #include "fsw_debug.h"
 #include "task_nums.h"
-
-// 3 second timeout
-#define WD_TIMEOUT_MS 3000
+#include "common.h"
 
 /**
  * @brief Initialize global stuff

@@ -9,7 +9,7 @@
 #define USART_BAUDRATE 115200
 #define USART_CLOCK 36000000  // Assuming 36 MHz APB1 clock
 
-SemaphoreHandle_t FswDebug::mutex;
+SemaphoreHandle_t FswDebug::log_mutex, FswDebug::send_mutex;
 
 void FswDebug::Init()
 {
@@ -34,7 +34,8 @@ void FswDebug::Init()
     while (!(USART3->ISR & USART_ISR_TEACK)) {} // Wait for TX enable
     //while (!(USART3->ISR & USART_ISR_REACK)) {} // Wait for RX enable
 
-    mutex = xSemaphoreCreateMutex();
+    log_mutex = xSemaphoreCreateMutex();
+    send_mutex = xSemaphoreCreateMutex();
 }
 
 void FswDebug::Log(const char *format, ...)
@@ -44,7 +45,7 @@ void FswDebug::Log(const char *format, ...)
     va_list args;
     char *task_name;
 
-    xSemaphoreTake(mutex, portMAX_DELAY);
+    xSemaphoreTake(log_mutex, portMAX_DELAY);
 
     task_name = pcTaskGetName(NULL);
 
@@ -55,16 +56,22 @@ void FswDebug::Log(const char *format, ...)
     snprintf(new_buff, 512, "%-20s %s\n\r", task_name, buff);
     USART3_SendString(new_buff);
 
-    xSemaphoreGive(mutex);
+    xSemaphoreGive(log_mutex);
 }
 
-void FswDebug::USART3_SendChar(char c) {
+void FswDebug::USART3_SendChar(char c)
+{
     while (!(USART3->ISR & USART_ISR_TXE)) {} // Wait until TX buffer is empty
     USART3->TDR = c; // Send character
 }
 
-void FswDebug::USART3_SendString(const char *str) {
+void FswDebug::USART3_SendString(const char *str)
+{
+    xSemaphoreTake(send_mutex, portMAX_DELAY);
+
     while (*str) {
         USART3_SendChar(*str++);
     }
+
+    xSemaphoreGive(send_mutex);
 }

@@ -2,6 +2,12 @@
 
 #include <cstdint>
 
+#include "FreeRTOS.h"
+
+// 3 second timeout
+#define WD_TIMEOUT_MS 3000
+#define WD_TIMEOUT_TICKS pdMS_TO_TICKS(WD_TIMEOUT_MS)
+
 // Status
 enum class Status
 {

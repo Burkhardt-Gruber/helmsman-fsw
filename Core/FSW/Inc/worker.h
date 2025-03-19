@@ -37,7 +37,7 @@ public:
     static void TaskFunction(void *arg);
 
     /**
-     * @brief Initialize stuff
+     * @brief Initialize stuff. Mean for hardware specific stuff, runs prior to RTOS.
      */
     virtual void Init(void *arg) = 0;
 
